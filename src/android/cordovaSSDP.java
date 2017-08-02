@@ -67,7 +67,7 @@ public class cordovaSSDP extends CordovaPlugin {
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody,
                                   Throwable error) {
-                LOG.e(TAG, responseBody.toString());
+                LOG.e(TAG, error.toString());
             }
         });
     }
@@ -105,7 +105,11 @@ public class cordovaSSDP extends CordovaPlugin {
             multicast.bind(srcAddress);
             multicast.setTimeToLive(4);
             multicast.send(discoveryPacket);
-        } finally {
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+        finally {
             multicast.disconnect();
             multicast.close();
         }
